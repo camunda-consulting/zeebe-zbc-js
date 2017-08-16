@@ -1,0 +1,5 @@
+state: CREATE_WORKFLOW_INSTANCE
+bpmnProcessId: demoProcess
+version: -1
+payload:
+  a: b

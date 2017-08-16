@@ -1,0 +1,26 @@
+{
+  "name": "zbc-js-client",
+  "version": "0.0.1",
+  "description": "Zeebe JS Client based on Go",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "devDependencies": {
+    "eslint": "3.12.0",
+    "eslint-config-airbnb-base": "11.0.0",
+    "eslint-plugin-import": "2.2.0",
+    "eslint-plugin-promise": "3.4.0",
+    "pre-commit": "1.2.1"
+  },
+  "dependencies": {
+    "ref": "^1.3.4",
+    "ffi": "^2.2.0",
+    "ref-struct": "^1.1.0",
+    "ref-array": "^1.2.0",
+    "async": "2.5.0"
+  },
+  "pre-commit": [
+    "lint"
+  ]
+}
