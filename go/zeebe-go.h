@@ -57,7 +57,9 @@ extern void subscribe(GoString p0, GoString p1, GoInt p2, GoString p3, GoString 
 
 extern void deployWorkflow(GoString p0, GoString p1, GoString p2);
 
-extern void startWorkFlowInstance(GoString p0, GoString p1, GoString p2);
+extern void startTask(GoString p0, GoString p1, GoString p2);
+
+extern void startWorkflowInstance(GoString p0, GoString p1, GoString p2);
 
 #ifdef __cplusplus
 }

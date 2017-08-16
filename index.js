@@ -2,14 +2,16 @@
 
 const client = require('./client')
 
+const myConsole = console
+
 if (process.argv.length <= 2) {
-  console.log(`Usage: ${__filename} SOME_PARAM`)
+  myConsole.log(`Usage: ${__filename} SOME_PARAM`)
   process.exit(-1)
 }
 
-let param = process.argv[2]
+const param = process.argv[2]
 
-console.log('Param: ' + param)
+myConsole.log(`Param: ${param}`)
 
 client.init()
 client[param]()

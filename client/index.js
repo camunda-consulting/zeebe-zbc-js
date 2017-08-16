@@ -12,7 +12,8 @@ client.init = function () {
   client.goClient = ffi.Library('./go/zeebe-go', {
     subscribe: ['string', [GoString, GoString, 'int', GoString, GoString]],
     deployWorkflow: ['string', [GoString, GoString, GoString]],
-    startWorkFlowInstance: ['string', [GoString, GoString, GoString]]
+    startTask: ['string', [GoString, GoString, GoString]],
+    startWorkflowInstance: ['string', [GoString, GoString, GoString]]
   })
 }
 
@@ -29,12 +30,19 @@ client.deployWorkflow = function () {
   const topic = new CreateGoString(config.zeebe.broker.defaulttopic)
   client.goClient.deployWorkflow(workflowPath, broker, topic)
 }
+client.startTask = function () {
+  const cmdPath = new CreateGoString('./examples/create-task.yaml')
+  const broker = new CreateGoString(config.zeebe.broker.address)
+  const topic = new CreateGoString(config.zeebe.broker.defaulttopic)
+
+  client.goClient.startTask(cmdPath, broker, topic)
+}
 client.startWorkflowInstance = function () {
   const cmdPath = new CreateGoString('./examples/create-workflow-instance.yaml')
   const broker = new CreateGoString(config.zeebe.broker.address)
   const topic = new CreateGoString(config.zeebe.broker.defaulttopic)
 
-  client.goClient.startWorkFlowInstance(cmdPath, broker, topic)
+  client.goClient.startWorkflowInstance(cmdPath, broker, topic)
 }
 
 

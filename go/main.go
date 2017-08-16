@@ -13,7 +13,6 @@ import (
 
 	yaml "gopkg.in/yaml.v2"
 
-	"github.com/BurntSushi/toml"
 	"github.com/zeebe-io/zbc-go/zbc"
 	"github.com/zeebe-io/zbc-go/zbc/sbe"
 )
@@ -142,14 +141,6 @@ func loadFile(path string) ([]byte, error) {
 
 }
 
-func loadConfig(path string, c *config) {
-	if _, err := toml.DecodeFile(path, c); err != nil {
-		log.Printf("Reading configuration failed. Expecting to found configuration file at %s\n", path)
-		log.Printf("HINT: Configuration file is not in place. Try setting configuration path with:")
-		log.Fatalln(" zbctl --config <path to config.toml>")
-	}
-}
-
 // Let's export some stuff
 
 //export subscribe
@@ -161,7 +152,6 @@ func subscribe(broker string, topic string, partitionId int, lockOwner string, t
 		int32(partitionId),
 		lockOwner,
 		taskType)
-	//return nil
 }
 
 //export deployWorkflow
@@ -190,8 +180,26 @@ func deployWorkflow(filePath string, broker string, topic string) {
 	}
 }
 
-//export startWorkFlowInstance
-func startWorkFlowInstance(command string, broker string, topic string) {
+//export startTask
+func startTask(command string, broker string, topic string) {
+	var task zbc.Task
+	err := loadCommandYaml(command, &task)
+	isFatal(err)
+
+	client, err := zbc.NewClient(broker)
+	isFatal(err)
+	log.Println("Connected to Zeebe.")
+
+	response, err := sendTask(client, topic, &task)
+	isFatal(err)
+
+	log.Println("Success. Received response:")
+	log.Println(*response.Data)
+}
+
+
+//export startWorkflowInstance
+func startWorkflowInstance(command string, broker string, topic string) {
 	var workflowInstance zbc.WorkflowInstance
 	err := loadCommandYaml(command, &workflowInstance)
 	isFatal(err)
@@ -207,6 +215,8 @@ func startWorkFlowInstance(command string, broker string, topic string) {
 	log.Println(*response)
 }
 
+//
+
 func main() {
-	
+
 }
